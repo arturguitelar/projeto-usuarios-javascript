@@ -64,23 +64,32 @@ class UserController {
      * Utiliza a api FileReader para trazer uma imagem
      * selecionada pelo usuário para o frontend.
      * 
-     * @param {Function} callback 
+     * @return {Promise} Promisse para a imagem.
      */
-    getPhoto(callback) {
-        let fileReader = new FileReader();
+    getPhoto() {
 
-        // buscando o elemento photo
-        let elements = [...this.formEl.elements].filter(item => {
-            if (item.name === 'photo') return item;
+        return new Promise((resolve, reject) => {
+
+            let fileReader = new FileReader();
+
+            // buscando o elemento photo
+            let elements = [...this.formEl.elements].filter(item => {
+                if (item.name === 'photo') return item;
+            });
+
+            let file = elements[0].files[0];
+            
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (e) => {
+                reject(e)
+            };
+
+            fileReader.readAsDataURL(file);
+
         });
-
-        let file = elements[0].files[0];
-        
-        fileReader.onload = () => {
-            callback(fileReader.result);
-        };
-
-        fileReader.readAsDataURL(file);
     }
 
     /**
@@ -115,13 +124,18 @@ class UserController {
             event.preventDefault();
 
             let values = this.getValues();
+
+            this.getPhoto().then(
+                (content) => {
+                    values.photo = content;
+
+                    this.addLine(values);
+                },
+                (e) => {
+                    console.error(e);
+                }
+            );
             
-            this.getPhoto(content => {
-                values.photo = content;
-
-                this.addLine(values);
-            });
-
         });
     }
 }

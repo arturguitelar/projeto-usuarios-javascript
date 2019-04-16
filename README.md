@@ -7,6 +7,8 @@ Algumas coisas interessantes aprendidas durante o projeto:
 - Abordagem simples ao conceito de SPA (Single Page Aplication).
 - Template strings para criação dinâmica de elementos.
 - Abordagem aos conceitos de OOP e MVC.
+- Abordagem a api FileReader.
+- Promises - Processos Assíncronos.
 
 ### [Perfil da Hcode no github.](https://github.com/hcodebr)
 
