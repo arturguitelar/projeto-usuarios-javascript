@@ -243,29 +243,29 @@
             <form role="form" id="form-user-create">
               <div class="box-body">
                 <div class="form-group">
-                  <label for="exampleInputName">Nome</label>
-                  <input type="text" class="form-control" id="exampleInputName" placeholder="Digite o nome do usuário" name="name">
+                  <label for="inputName">Nome</label>
+                  <input type="text" class="form-control" id="inputName" placeholder="Digite o nome do usuário" name="name">
                 </div>
                 <div class="form-group">
                   <label>Gênero</label>
                   <div class="radio">
-                    <label for="exampleInputGenderM">
-                      <input type="radio" id="exampleInputGenderM" name="gender">
+                    <label for="inputGenderM">
+                      <input type="radio" id="inputGenderM" name="gender" value="M" checked>
                       Masculino</label>
                   </div>
                   <div class="radio">
-                    <label for="exampleInputGenderF">
-                      <input type="radio" id="exampleInputGenderF" name="gender">
+                    <label for="inputGenderF">
+                      <input type="radio" id="inputGenderF" name="gender" value="F">
                       Feminino</label>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputBirth">Nascimento</label>
-                  <input type="date" class="form-control" id="exampleInputBirth" name="birth">
+                  <label for="inputBirth">Nascimento</label>
+                  <input type="date" class="form-control" id="inputBirth" name="birth">
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputCountry">País</label>
-                  <select class="form-control" id="exampleInputCountry" name="country">
+                  <label for="inputCountry">País</label>
+                  <select class="form-control" id="inputCountry" name="country">
                     <option value="" selected="selected">Selecione um país</option>
                     <option value="United States">United States</option>
                     <option value="United Kingdom">United Kingdom</option>
@@ -511,20 +511,20 @@
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputEmail1">E-mail</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Digite o e-mail" name="email">
+                  <label for="inputEmail">E-mail</label>
+                  <input type="email" class="form-control" id="inputEmail" placeholder="Digite o e-mail" name="email">
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputPassword1">Senha</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Crie uma senha" name="password">
+                  <label for="inputPassword">Senha</label>
+                  <input type="password" class="form-control" id="inputPassword" placeholder="Crie uma senha" name="password">
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputFile">Foto</label>
-                  <input type="file" id="exampleInputFile" name="photo">
+                  <label for="inputFile">Foto</label>
+                  <input type="file" id="inputFile" name="photo">
                 </div>
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" name="admin"> Administrador
+                    <input type="checkbox" id="inputAdmin" name="admin"> Administrador
                   </label>
                 </div>
               </div>
@@ -555,5 +555,6 @@
 
 </div>
 
+<script src="scripts/index.js"></script>
 </body>
 </html>
