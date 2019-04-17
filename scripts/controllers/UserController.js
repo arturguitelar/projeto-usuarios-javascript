@@ -23,9 +23,26 @@ class UserController {
     getValues() {
 
         let user = {};
+        let isValid = true;
 
         // Solução com spread operator
         [...this.formEl.elements].forEach(function(field, index) {
+
+            /* Validação de campos. */
+            /* 
+             * Utiliza a lógica de indexOf para arrays, já que, neste método,
+             * quando não é encontrado um índice com o valor o indexOf retorna -1.
+             * Além disso, o valor do campo precisa ser diferente de vazio ou não existe.
+            */
+            if (['name', 'email', 'password'].indexOf(field.name) > -1 && !field.value) {
+                // neste caso é preciso acessar o elemento pai do input e adicionar a classe css "has-error"
+                field.parentElement.classList.add('has-error');
+                isValid = false;
+            }
+
+            /*
+             * Verificando se os campos "gender" e "admin" estão checados. 
+            */
             if (field.name == 'gender') {
                 if (field.checked) {
                     user[field.name] = field.value;
@@ -37,19 +54,9 @@ class UserController {
             }          
         });
 
-        // // Solução com um laço for
-        // for (let i = 0; i < this.formEl.elements.length; i++) {
-        //     let field = this.formEl.elements[i];
-
-        //     if (field.name == 'gender') {
-        //         if (field.checked) {
-        //             user[field.name] = field.value;
-        //         }
-        //     } else {
-        //         user[field.name] = field.value;
-        //     } 
-        // }
-
+        // se o formulário não estiver válido, não deve criar um usuário.
+        if (!isValid) return false;
+        
         return new User(
             user.name, 
             user.gender, 
@@ -113,7 +120,7 @@ class UserController {
             <td>${dataUser.name}</td>
             <td>${dataUser.email}</td>
             <td>${(dataUser.admin) ? 'Sim' : 'Não'}</td>
-            <td>${dataUser.birth}</td>
+            <td>${Utils.dateFormat(dataUser.register)}</td>
             <td>
             <button type="button" class="btn btn-primary btn-xs btn-flat">Editar</button>
             <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
