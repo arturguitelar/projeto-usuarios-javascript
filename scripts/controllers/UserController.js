@@ -56,7 +56,7 @@ class UserController {
 
         // se o formulário não estiver válido, não deve criar um usuário.
         if (!isValid) return false;
-        
+
         return new User(
             user.name, 
             user.gender, 
@@ -143,6 +143,8 @@ class UserController {
             btn.disabled = true;
 
             let values = this.getValues();
+
+            if (!values) return false;
 
             this.getPhoto().then(
                 (content) => {
