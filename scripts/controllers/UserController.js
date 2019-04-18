@@ -193,7 +193,7 @@ class UserController {
                         <td>${Utils.dateFormat(result._register)}</td>
                         <td>
                         <button type="button" class="btn btn-primary btn-xs btn-flat btn-edit">Editar</button>
-                        <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
+                        <button type="button" class="btn btn-danger btn-xs btn-flat btn-delete">Excluir</button>
                         </td>
                     `;
 
@@ -212,6 +212,68 @@ class UserController {
                 }
             );
 
+        });
+    }
+  
+    /**
+     * Adiciona eventos em uma tr especificada.
+     * 
+     * Trata evento o botão de edição.
+     * Trata evento no botão de excluir.
+     * 
+     * @param {HTMLTableRowElement} tr  Tr que receberá o evento.
+     */
+    addEventsTr(tr) {
+        // adicionando evento ao botão editar
+        tr.querySelector('.btn-edit').addEventListener('click', e => {
+            let json = JSON.parse(tr.dataset.user);
+
+            // Estabelecendo um id para o registro que será editado.
+            this.formUpdateEl.dataset.trIndex = tr.sectionRowIndex;
+
+            /**
+             * Como os dados recuperados vai dataset são um objeto novo copiado do User,
+             * as propriedades privadas estão com um underline (_). É preciso percorrer
+             * este novo objeto e comparar as propriedades com os campos do formulário,
+             * que não possuem underline e então retirar o underline dessas propriedades.
+             */
+            for (let name in json) {
+                let field = this.formUpdateEl.querySelector("[name=" + name.replace("_", "") + "]");
+                
+                if (field) {
+
+                    switch (field.type) {
+                        case 'file':
+                            continue;
+                        break;
+                    
+                        case 'radio':
+                            field = this.formUpdateEl.querySelector("[name=" + name.replace("_", "") + "][value=" + json[name] +"]");
+                            field.checked = true;
+                        break;
+
+                        case 'checkbox':
+                            field.checked = json[name];
+                        break;
+
+                        default:
+                            field.value = json[name];
+                    }
+                }
+            }
+
+            this.formUpdateEl.querySelector('.photo').src = json._photo;
+
+            this.showPanelUpdate();
+        });
+
+        // adicionando evento ao botão excluir
+        tr.querySelector('.btn-delete').addEventListener('click', e => {
+            if (confirm("Deseja realmente excluir?")) {
+                tr.remove();
+
+                this.updateCount();
+            }
         });
     }
     
@@ -238,7 +300,7 @@ class UserController {
             <td>${Utils.dateFormat(dataUser.register)}</td>
             <td>
             <button type="button" class="btn btn-primary btn-xs btn-flat btn-edit">Editar</button>
-            <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
+            <button type="button" class="btn btn-danger btn-xs btn-flat btn-delete">Excluir</button>
             </td>
         `;
 
@@ -287,55 +349,5 @@ class UserController {
     showPanelUpdate() {
         document.querySelector('#box-user-create').style.display = 'none';
         document.querySelector('#box-user-update').style.display = 'block';
-    }
-
-    /**
-     * Adiciona eventos em uma tr especificada.
-     * 
-     * @param {HTMLTableRowElement} tr  Tr que receberá o evento.
-     */
-    addEventsTr(tr) {
-        // adicionando evento ao botão editar
-        tr.querySelector('.btn-edit').addEventListener('click', e => {
-            let json = JSON.parse(tr.dataset.user);
-
-            // Estabelecendo um id para o registro que será editado.
-            this.formUpdateEl.dataset.trIndex = tr.sectionRowIndex;
-
-            /**
-             * Como os dados recuperados vai dataset são um objeto novo copiado do User,
-             * as propriedades privadas estão com um underline (_). É preciso percorrer
-             * este novo objeto e comparar as propriedades com os campos do formulário,
-             * que não possuem underline e então retirar o underline dessas propriedades.
-             */
-            for (let name in json) {
-                let field = this.formUpdateEl.querySelector("[name=" + name.replace("_", "") + "]");
-                
-                if (field) {
-
-                    switch (field.type) {
-                        case 'file':
-                            continue;
-                        break;
-                    
-                        case 'radio':
-                            field = this.formUpdateEl.querySelector("[name=" + name.replace("_", "") + "][value=" + json[name] +"]");
-                            field.checked = true;
-                        break;
-
-                        case 'checkbox':
-                            field.checked = json[name];
-                        break;
-
-                        default:
-                            field.value = json[name];
-                    }
-                }
-            }
-
-            this.formUpdateEl.querySelector('.photo').src = json._photo;
-
-            this.showPanelUpdate();
-        });
     }
 }
