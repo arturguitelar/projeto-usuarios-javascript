@@ -57,4 +57,23 @@ class User {
     set photo(value) {
         this._photo = value;
     }
+
+    /* Methods */
+    /**
+     * Carrega um usuário a partir de um JSON.
+     * 
+     * @param {JSON} json JSON com os dados.
+     */
+    loadFromJSON(json) {
+        for (let name in json) {
+            switch(name) {
+                case '_register':
+                    this[name] = new Date(json[name]);
+                break;
+
+                default:
+                    this[name] = json[name];
+            }
+        }
+    }
 }

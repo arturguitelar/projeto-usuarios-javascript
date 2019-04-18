@@ -15,6 +15,8 @@ class UserController {
 
         this.onSubmit();
         this.onEdit();
+
+        this.selectAll();
     }
 
     /**
@@ -128,6 +130,8 @@ class UserController {
             this.getPhoto(this.formEl).then(
                 (content) => {
                     values.photo = content;
+
+                    this.insert(values);
 
                     this.addLine(values);
 
@@ -276,11 +280,60 @@ class UserController {
             }
         });
     }
+
+    /* CRUD session storage */
+    /**
+     * Pega os usuários da sessão.
+     * 
+     * @return {Array} Usuários na session storage.
+     */
+    getUsersStorage() {
+        let users = [];
+
+        // verifica se já existem usuários no session storage
+        if (sessionStorage.getItem('users')) {
+            users = JSON.parse(sessionStorage.getItem('users'));
+        }
+
+        return users;
+    }
+
+    /**
+     * Lista todos os dados armazenados na session storage.
+     * Adiciona uma linha na tabela para cada um deles utilizando o método addLine().
+     */
+    selectAll () {
+        let users = this.getUsersStorage();
+
+        users.forEach(dataUser => {
+            let user = new User();
+
+            user.loadFromJSON(dataUser);
+
+            this.addLine(user);
+        });
+    }
+
+    /**
+     * Recebe dados que foram preenchidos no formulário de criação de usuário.
+     * Insere estes dados na sessão atual utilizando session storage.
+     * 
+     * @param {User} data Objeto com dados do Usário.
+     */
+    insert(data) {
+        let users = this.getUsersStorage();
+
+        users.push(data);
+
+        sessionStorage.setItem('users', JSON.stringify(users));
+    }
     
     /** View */
     /**
-     * Cria um elemento "tr" para uma tabela especificada utilizando os dados 
-     * que foram preenchidos no formulário de criação de usuário.
+     * Recebe dados que foram preenchidos no formulário de criação de usuário.
+     * Chama o método para inserir estes dados em um local de armazenagem.
+     * Cria um elemento "tr" para uma tabela especificada utilizando estes dados. 
+     * Insere a tr na tabela.
      * 
      * @param {User} dataUser Objeto com dados do Usuário.
      */

@@ -13,6 +13,7 @@ Algumas coisas interessantes aprendidas durante o projeto:
 - Possibilidades para o uso do Date.
 - Utilização de DataSets e Serialização de objetos.
 - Mesclar objetos com Object.assign.
+- Utilização de sessionStorage para armazenamento temporáro de dados.
 
 ### [Perfil da Hcode no github.](https://github.com/hcodebr)
 
