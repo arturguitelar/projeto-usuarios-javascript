@@ -12,6 +12,7 @@ class UserController {
         this.tableEl = document.getElementById(tableID);
 
         this.onSubmit();
+        this.onEdit();
     }
 
     /**
@@ -139,6 +140,15 @@ class UserController {
         });
     }
 
+    /**
+     * Trata os eventos de edição do formulário.
+     */
+    onEdit() {
+        // botão de cancelar
+        document.querySelector("#box-user-update .btn-cancel").addEventListener('click', e => {
+            this.showPanelCreate();
+        });
+    }
     
     /** View */
     /**
@@ -167,10 +177,17 @@ class UserController {
             <td>${(dataUser.admin) ? 'Sim' : 'Não'}</td>
             <td>${Utils.dateFormat(dataUser.register)}</td>
             <td>
-            <button type="button" class="btn btn-primary btn-xs btn-flat">Editar</button>
+            <button type="button" class="btn btn-primary btn-xs btn-flat btn-edit">Editar</button>
             <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
             </td>
         `;
+
+        // adicionando evento ao botão editar
+        tr.querySelector('.btn-edit').addEventListener('click', e => {
+            console.log(JSON.parse(tr.getAttribute('data-user')));
+
+            this.showPanelUpdate();
+        });
 
         this.tableEl.appendChild(tr);
 
@@ -197,5 +214,21 @@ class UserController {
         // concluída a contagem, envia para o html
         document.querySelector('#number-users').innerHTML = numberUsers;
         document.querySelector('#number-users-admins').innerHTML = numberAdmins;
+    }
+
+    /**
+     * Mostra o painel de criação de usuário.
+     */
+    showPanelCreate() {
+        document.querySelector('#box-user-create').style.display = 'block';
+        document.querySelector('#box-user-update').style.display = 'none';
+    }
+
+    /**
+     * Mostra o painel de edição de usuário.
+     */
+    showPanelUpdate() {
+        document.querySelector('#box-user-create').style.display = 'none';
+        document.querySelector('#box-user-update').style.display = 'block';
     }
 }
