@@ -106,31 +106,6 @@ class UserController {
     }
 
     /**
-     * Cria um elemento "tr" para uma tabela especificada utilizando os dados 
-     * que foram preenchidos no formulário de criação de usuário.
-     * 
-     * @param {User} dataUser Objeto com dados do Usuário.
-     */
-    addLine(dataUser) {
-
-        let tr = document.createElement('tr');
-
-        tr.innerHTML = `
-            <td><img src="${dataUser.photo}" alt="User Image" class="img-circle img-sm"></td>
-            <td>${dataUser.name}</td>
-            <td>${dataUser.email}</td>
-            <td>${(dataUser.admin) ? 'Sim' : 'Não'}</td>
-            <td>${Utils.dateFormat(dataUser.register)}</td>
-            <td>
-            <button type="button" class="btn btn-primary btn-xs btn-flat">Editar</button>
-            <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
-            </td>
-        `;
-
-        this.tableEl.appendChild(tr);
-    }
-
-    /**
      * Trata o evento de submissão do formulário.
      */
     onSubmit() {
@@ -162,5 +137,65 @@ class UserController {
             );
             
         });
+    }
+
+    
+    /** View */
+    /**
+     * Cria um elemento "tr" para uma tabela especificada utilizando os dados 
+     * que foram preenchidos no formulário de criação de usuário.
+     * 
+     * @param {User} dataUser Objeto com dados do Usuário.
+     */
+    addLine(dataUser) {
+
+        let tr = document.createElement('tr');
+
+        // Serializa os dados do usuário para a criação do dataset.
+        // tr.dataset.user = JSON.stringify(dataUser);
+
+        // Para não ter que utilizar um objeto inteiro com TODOS os dados (inclusive o password) no DOM.
+        // Solução do usuário Luis Fernando lá na Udemy:
+        tr.setAttribute('data-user', JSON.stringify({
+            admin: dataUser.admin
+        }));
+
+        tr.innerHTML = `
+            <td><img src="${dataUser.photo}" alt="User Image" class="img-circle img-sm"></td>
+            <td>${dataUser.name}</td>
+            <td>${dataUser.email}</td>
+            <td>${(dataUser.admin) ? 'Sim' : 'Não'}</td>
+            <td>${Utils.dateFormat(dataUser.register)}</td>
+            <td>
+            <button type="button" class="btn btn-primary btn-xs btn-flat">Editar</button>
+            <button type="button" class="btn btn-danger btn-xs btn-flat">Excluir</button>
+            </td>
+        `;
+
+        this.tableEl.appendChild(tr);
+
+        this.updateCount();
+    }
+
+    /**
+     * Percorre cada elemento contido na tabela.
+     * Atualiza o total de usuários na view.
+     * Atualiza o total de usuários admin na view.
+     */
+    updateCount() {
+        let numberUsers = 0;
+        let numberAdmins = 0;
+
+        [...this.tableEl.children].forEach(tr => {
+            numberUsers++;
+
+            let user = JSON.parse(tr.getAttribute('data-user'));
+
+            if (user.admin) numberAdmins++;
+        });
+
+        // concluída a contagem, envia para o html
+        document.querySelector('#number-users').innerHTML = numberUsers;
+        document.querySelector('#number-users-admins').innerHTML = numberAdmins;
     }
 }

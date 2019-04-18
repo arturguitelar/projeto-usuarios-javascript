@@ -11,6 +11,7 @@ Algumas coisas interessantes aprendidas durante o projeto:
 - Promises - Processos Assíncronos.
 - Utilizar métodos estáticos em uma classe.
 - Possibilidades para o uso do Date.
+- Utilização de DataSets e Serialização de objetos.
 
 ### [Perfil da Hcode no github.](https://github.com/hcodebr)
 
