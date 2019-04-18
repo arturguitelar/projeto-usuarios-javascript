@@ -12,6 +12,7 @@ Algumas coisas interessantes aprendidas durante o projeto:
 - Utilizar métodos estáticos em uma classe.
 - Possibilidades para o uso do Date.
 - Utilização de DataSets e Serialização de objetos.
+- Mesclar objetos com Object.assign.
 
 ### [Perfil da Hcode no github.](https://github.com/hcodebr)
 
