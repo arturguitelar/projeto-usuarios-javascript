@@ -281,25 +281,25 @@ class UserController {
         });
     }
 
-    /* CRUD session storage */
+    /* CRUD storage */
     /**
-     * Pega os usuários da sessão.
+     * Pega os usuários da storage.
      * 
-     * @return {Array} Usuários na session storage.
+     * @return {Array} Usuários na storage.
      */
     getUsersStorage() {
         let users = [];
 
-        // verifica se já existem usuários no session storage
-        if (sessionStorage.getItem('users')) {
-            users = JSON.parse(sessionStorage.getItem('users'));
+        // verifica se já existem usuários no storage
+        if (localStorage.getItem('users')) {
+            users = JSON.parse(localStorage.getItem('users'));
         }
 
         return users;
     }
 
     /**
-     * Lista todos os dados armazenados na session storage.
+     * Lista todos os dados armazenados na storage.
      * Adiciona uma linha na tabela para cada um deles utilizando o método addLine().
      */
     selectAll () {
@@ -316,7 +316,7 @@ class UserController {
 
     /**
      * Recebe dados que foram preenchidos no formulário de criação de usuário.
-     * Insere estes dados na sessão atual utilizando session storage.
+     * Insere estes dados no storage.
      * 
      * @param {User} data Objeto com dados do Usário.
      */
@@ -325,7 +325,7 @@ class UserController {
 
         users.push(data);
 
-        sessionStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem('users', JSON.stringify(users));
     }
     
     /** View */
