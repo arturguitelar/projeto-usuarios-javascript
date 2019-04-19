@@ -152,6 +152,8 @@ class UserController {
      * 
      * Trata evento de click no botão que cancela edição.
      * Trata evento de submissão de formulário.
+     * 
+     * Chama o método para criar uma tr baseada nos dados editados.
      */
     onEdit() {
         // botão de cancelar
@@ -187,21 +189,11 @@ class UserController {
                         result._photo = content;
                     }
 
-                    tr.dataset.user = JSON.stringify(result);
+                    let user = new User();
 
-                    tr.innerHTML = `
-                        <td><img src="${result._photo}" alt="User Image" class="img-circle img-sm"></td>
-                        <td>${result._name}</td>
-                        <td>${result._email}</td>
-                        <td>${(result._admin) ? 'Sim' : 'Não'}</td>
-                        <td>${Utils.dateFormat(result._register)}</td>
-                        <td>
-                        <button type="button" class="btn btn-primary btn-xs btn-flat btn-edit">Editar</button>
-                        <button type="button" class="btn btn-danger btn-xs btn-flat btn-delete">Excluir</button>
-                        </td>
-                    `;
+                    user.loadFromJSON(result);
 
-                    this.addEventsTr(tr);
+                    this.renderTr(user, tr);
 
                     this.updateCount();
 
@@ -225,7 +217,7 @@ class UserController {
      * Trata evento o botão de edição.
      * Trata evento no botão de excluir.
      * 
-     * @param {HTMLTableRowElement} tr  Tr que receberá o evento.
+     * @param {HTMLElement} tr  Tr que receberá o evento.
      */
     addEventsTr(tr) {
         // adicionando evento ao botão editar
@@ -328,36 +320,17 @@ class UserController {
         localStorage.setItem('users', JSON.stringify(users));
     }
     
-    /** View */
     /**
      * Recebe dados que foram preenchidos no formulário de criação de usuário.
      * Chama o método para inserir estes dados em um local de armazenagem.
-     * Cria um elemento "tr" para uma tabela especificada utilizando estes dados. 
+     * Chama o método para criar uma tr baseada nestes dados. 
      * Insere a tr na tabela.
      * 
      * @param {User} dataUser Objeto com dados do Usuário.
      */
     addLine(dataUser) {
 
-        let tr = document.createElement('tr');
-
-        // Serializa os dados do usuário para a criação do dataset.
-        // Isso foi feito para fins didáticos. Não é seguro.
-        tr.dataset.user = JSON.stringify(dataUser);
-
-        tr.innerHTML = `
-            <td><img src="${dataUser.photo}" alt="User Image" class="img-circle img-sm"></td>
-            <td>${dataUser.name}</td>
-            <td>${dataUser.email}</td>
-            <td>${(dataUser.admin) ? 'Sim' : 'Não'}</td>
-            <td>${Utils.dateFormat(dataUser.register)}</td>
-            <td>
-            <button type="button" class="btn btn-primary btn-xs btn-flat btn-edit">Editar</button>
-            <button type="button" class="btn btn-danger btn-xs btn-flat btn-delete">Excluir</button>
-            </td>
-        `;
-
-        this.addEventsTr(tr);
+        let tr = this.renderTr(dataUser);
 
         this.tableEl.appendChild(tr);
 
@@ -402,5 +375,38 @@ class UserController {
     showPanelUpdate() {
         document.querySelector('#box-user-create').style.display = 'none';
         document.querySelector('#box-user-update').style.display = 'block';
+    }
+
+    /* View */
+    /**
+     * Recebe um objeto com dados e retorna uma linha na tabela com estes dados.
+     * 
+     * @param {User} data Objeto com dados.
+     * @param {*} tr (Opcional) Tr onde as tds serão criadas.
+     * 
+     * @return {HTMLElement} Linha com os dados para a  tabela.
+     */
+    renderTr(data, tr = null) {
+        if (tr === null) tr = document.createElement('tr');
+
+        // Serializa os dados do usuário para a criação do dataset.
+        // Isso foi feito para fins didáticos. Não é seguro.
+        tr.dataset.user = JSON.stringify(data);
+
+        tr.innerHTML = `
+            <td><img src="${data.photo}" alt="User Image" class="img-circle img-sm"></td>
+            <td>${data.name}</td>
+            <td>${data.email}</td>
+            <td>${(data.admin) ? 'Sim' : 'Não'}</td>
+            <td>${Utils.dateFormat(data.register)}</td>
+            <td>
+            <button type="button" class="btn btn-primary btn-xs btn-flat btn-edit">Editar</button>
+            <button type="button" class="btn btn-danger btn-xs btn-flat btn-delete">Excluir</button>
+            </td>
+        `;
+
+        this.addEventsTr(tr);
+
+        return tr;
     }
 }
