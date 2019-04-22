@@ -14,6 +14,7 @@ Algumas coisas interessantes aprendidas durante o projeto:
 - Utilização de DataSets e Serialização de objetos.
 - Mesclar objetos com Object.assign.
 - Utilização de sessionStorage ou localStorage para armazenamento temporáro de dados.
+- DAO.
 
 ### [Perfil da Hcode no github.](https://github.com/hcodebr)
 

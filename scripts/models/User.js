@@ -1,6 +1,7 @@
 class User {
 
     constructor(name, gender, birth, country, email, password, photo, admin) {
+        this._admin;
         this._name = name;
         this._gender = gender;
         this._birth = birth;
@@ -14,6 +15,10 @@ class User {
     }
 
     /* Getters & Setters */
+    get id() {
+        return this._id;
+    }
+
     get name() {
         return this._name;
     }
@@ -75,5 +80,61 @@ class User {
                     this[name] = json[name];
             }
         }
+    }
+
+    /* CRUD - User */
+    /**
+     * Salva um usuário no storage.
+     * - Verfica se já existe um usuário com o mesmo id.
+     * - Se existir, adiciona os novos dados ao usuário existente.
+     * - Caso contrário cria um novo usuário.
+     */
+    save() {
+        let users = User.getUsersStorage();
+
+        if (this.id > 0) {
+            users.map(user => {
+                if (user._id == this.id) {
+                    Object.assign(user, this);
+                }
+                return user;
+            });
+        } else {
+            this._id = this.getNewID();
+
+            users.push(this);
+        }
+
+        localStorage.setItem('users', JSON.stringify(users));
+    }
+
+    /**
+     * Pega os usuários da storage.
+     * 
+     * @return {Array} Usuários na storage.
+     */
+    static getUsersStorage() {
+        let users = [];
+
+        // verifica se já existem usuários no storage
+        if (localStorage.getItem('users')) {
+            users = JSON.parse(localStorage.getItem('users'));
+        }
+
+        return users;
+    }
+
+    /**
+     * Cria um novo id no escopo global.
+     * 
+     * @return {Number} ID global.
+     */
+    getNewID() {
+        // verifica se já existe um id no escopo global
+        if (!window.id) window.id = 0;
+
+        id++;
+
+        return id;
     }
 }

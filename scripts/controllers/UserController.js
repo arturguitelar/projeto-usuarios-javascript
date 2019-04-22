@@ -131,7 +131,7 @@ class UserController {
                 (content) => {
                     values.photo = content;
 
-                    this.insert(values);
+                    values.save();
 
                     this.addLine(values);
 
@@ -192,6 +192,8 @@ class UserController {
                     let user = new User();
 
                     user.loadFromJSON(result);
+
+                    user.save();
 
                     this.renderTr(user, tr);
 
@@ -304,20 +306,6 @@ class UserController {
 
             this.addLine(user);
         });
-    }
-
-    /**
-     * Recebe dados que foram preenchidos no formulário de criação de usuário.
-     * Insere estes dados no storage.
-     * 
-     * @param {User} data Objeto com dados do Usário.
-     */
-    insert(data) {
-        let users = this.getUsersStorage();
-
-        users.push(data);
-
-        localStorage.setItem('users', JSON.stringify(users));
     }
     
     /**
