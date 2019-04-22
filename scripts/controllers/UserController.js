@@ -1,8 +1,6 @@
 class UserController {
     /**
-     * Recebe o id do formulário que será usado como referência.
-     * Recebe o id da tabela onde será criado um elemento "tr"
-     * com os dados que foram recebidos do formulário.
+     * UserController constructor.
      * 
      * @param {string} formIDCreate ID do formulário de criação.
      * @param {string} formIDUpdate ID do formulário de edição.
@@ -215,14 +213,13 @@ class UserController {
   
     /**
      * Adiciona eventos em uma tr especificada.
-     * 
-     * Trata evento o botão de edição.
-     * Trata evento no botão de excluir.
+     * - Trata evento o botão de edição.
+     * - Trata evento no botão de excluir.
      * 
      * @param {HTMLElement} tr  Tr que receberá o evento.
      */
     addEventsTr(tr) {
-        // adicionando evento ao botão editar
+        // botão editar
         tr.querySelector('.btn-edit').addEventListener('click', e => {
             let json = JSON.parse(tr.dataset.user);
 
@@ -265,9 +262,18 @@ class UserController {
             this.showPanelUpdate();
         });
 
-        // adicionando evento ao botão excluir
+        // botão excluir
+        // - Cria uma instância de User através do dataset do elemento.
+        // - Chama método que deleta o usuário do storage
         tr.querySelector('.btn-delete').addEventListener('click', e => {
             if (confirm("Deseja realmente excluir?")) {
+                
+                let user = new User();
+                
+                user.loadFromJSON(JSON.parse(tr.dataset.user));
+                
+                user.remove();
+
                 tr.remove();
 
                 this.updateCount();
@@ -275,29 +281,12 @@ class UserController {
         });
     }
 
-    /* CRUD storage */
-    /**
-     * Pega os usuários da storage.
-     * 
-     * @return {Array} Usuários na storage.
-     */
-    getUsersStorage() {
-        let users = [];
-
-        // verifica se já existem usuários no storage
-        if (localStorage.getItem('users')) {
-            users = JSON.parse(localStorage.getItem('users'));
-        }
-
-        return users;
-    }
-
     /**
      * Lista todos os dados armazenados na storage.
      * Adiciona uma linha na tabela para cada um deles utilizando o método addLine().
      */
     selectAll () {
-        let users = this.getUsersStorage();
+        let users = User.getUsersStorage();
 
         users.forEach(dataUser => {
             let user = new User();
@@ -309,10 +298,11 @@ class UserController {
     }
     
     /**
-     * Recebe dados que foram preenchidos no formulário de criação de usuário.
-     * Chama o método para inserir estes dados em um local de armazenagem.
-     * Chama o método para criar uma tr baseada nestes dados. 
-     * Insere a tr na tabela.
+     * Adiciona uma nova linha na tabela de usuários.
+     * - Recebe dados que foram preenchidos no formulário de criação de usuário.
+     * - Chama o método para inserir estes dados em um local de armazenagem.
+     * - Chama o método para criar uma tr baseada nestes dados. 
+     * - Insere a tr na tabela.
      * 
      * @param {User} dataUser Objeto com dados do Usuário.
      */
@@ -326,9 +316,10 @@ class UserController {
     }
 
     /**
-     * Percorre cada elemento contido na tabela.
-     * Atualiza o total de usuários na view.
-     * Atualiza o total de usuários admin na view.
+     * Atualiza os contadores de usuários.
+     * - Percorre cada elemento contido na tabela.
+     * - Atualiza o total de usuários na view.
+     * - Atualiza o total de usuários admin na view.
      */
     updateCount() {
         let numberUsers = 0;

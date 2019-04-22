@@ -82,6 +82,25 @@ class User {
         }
     }
 
+    /**
+     * Cria um novo id no storage.
+     * - Verifica se já existe um id no escopo antes de criar.
+     * 
+     * @return {Number} ID global.
+     */
+    getNewID() {
+
+        let usersID = parseInt(localStorage.getItem('usersID'));
+
+        if (!usersID > 0) usersID = 0;
+
+        usersID++;
+
+        localStorage.setItem('usersID', usersID);
+
+        return usersID;
+    }
+
     /* CRUD - User */
     /**
      * Salva um usuário no storage.
@@ -109,7 +128,7 @@ class User {
     }
 
     /**
-     * Pega os usuários da storage.
+     * Pega os usuários do storage.
      * 
      * @return {Array} Usuários na storage.
      */
@@ -125,16 +144,17 @@ class User {
     }
 
     /**
-     * Cria um novo id no escopo global.
-     * 
-     * @return {Number} ID global.
+     * Remove um usuário especificado do storage.
      */
-    getNewID() {
-        // verifica se já existe um id no escopo global
-        if (!window.id) window.id = 0;
+    remove() {
+        let users = User.getUsersStorage();
 
-        id++;
-
-        return id;
+        users.forEach((userData, index) => {
+            if (this._id == userData._id) {
+                users.splice(index, 1);
+            }
+        });
+        
+        localStorage.setItem('users', JSON.stringify(users));        
     }
 }
