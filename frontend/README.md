@@ -1,8 +1,10 @@
 # Projeto Gerenciamento de Usuários (frontend)
 
-Projeto baseado no curso de Javascript da HCode.
+Projeto baseado no o [Curso Completo de JavaScript na Udemy.com]((https://www.udemy.com/javascript-curso-completo/)).
 
-Algumas coisas interessantes aprendidas durante esta parte do projeto:
+[![Hcode Treinamentos](https://www.hcode.com.br/res/img/hcode-200x100.png)](https://www.hcode.com.br)
+
+**Algumas coisas interessantes aprendidas durante esta parte do projeto:**
 - Percorrer os campos de um formulário dinamicamente e criar um objeto com chaves dinâmicas através do resultado.
 - Abordagem simples ao conceito de SPA (Single Page Aplication).
 - Template strings para criação dinâmica de elementos.
@@ -15,6 +17,17 @@ Algumas coisas interessantes aprendidas durante esta parte do projeto:
 - Mesclar objetos com Object.assign.
 - Utilização de sessionStorage ou localStorage para armazenamento temporáro de dados.
 - DAO.
+
+### Instalação
+Caso ainda não possua o [Bower](https://bower.io/) instalado:
+```
+npm install -g bower
+```
+
+Para baixar os pacotes do Bower.
+```
+bower install
+```
 
 ### [Perfil da Hcode no github.](https://github.com/hcodebr)
 
