@@ -18,6 +18,9 @@ Projeto baseado no o [Curso Completo de JavaScript na Udemy.com]((https://www.ud
 - Utilização de sessionStorage ou localStorage para armazenamento temporáro de dados.
 - DAO.
 
+**Aviso:**
+Como este projeto de frontend foi criado em um módulo anterior e será modificado dentro do projeto "client-server", irei manter este "backup" aqui como fonte de consulta futura.
+
 ### Instalação
 Caso ainda não possua o [Bower](https://bower.io/) instalado:
 ```

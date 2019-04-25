@@ -1,6 +1,6 @@
 # Projeto Gerenciamento de Usuários
 
-Projeto baseado no curso de Javascript da HCode.
+Projeto baseado no [curso de Javascript da HCode](https://www.udemy.com/javascript-curso-completo/).
 
 Originalmente, o curso divide o projeto em duas partes (Frontend e RestApi). Resolvi condensar em um único projeto para deixá-lo mais completo e não ter de criar outro repositório com código duplicado.
 

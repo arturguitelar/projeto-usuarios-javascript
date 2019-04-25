@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 
 let app = express();
-const port = 3000;
+const port = 4000;
 
 // configurações do body-parser
 app.use(bodyParser.urlencoded({ extended: false }));
