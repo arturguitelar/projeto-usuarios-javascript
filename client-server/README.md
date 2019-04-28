@@ -8,6 +8,10 @@ Projeto baseado no o [Curso Completo de JavaScript na Udemy.com]((https://www.ud
 - Criação de projeto com a ferramenta Express Generator.
 - Restify.
 
+**Nota**
+Na última parte do módulo, é ensinada uma outra forma de fazer uma requisição assíncrona utilizando-se do método "fetch()".
+Deixei a forma de XmlHttpRequest comentada no código para ter material para consultas futuras.
+
 ### Instalação
 ```
 npm install
