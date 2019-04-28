@@ -57,7 +57,10 @@ class HttpRequest {
                 resolve(obj);
             };
 
-            ajax.send();
+            ajax.setRequestHeader('Content-Type', 'application/json');
+            
+            // Nota: O método sendo do ajax só envia texto
+            ajax.send(JSON.stringify(params));
         });
     }
 }

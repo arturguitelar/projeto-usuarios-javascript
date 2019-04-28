@@ -77,84 +77,68 @@ class User {
                 break;
 
                 default:
-                    this[name] = json[name];
+                    if (name.substring(0, 1) === '_') this[name] = json[name];
             }
         }
     }
 
     /**
-     * Cria um novo id no storage.
-     * - Verifica se já existe um id no escopo antes de criar.
+     * Cria um JSON com os dados de user.
      * 
-     * @return {Number} ID global.
+     * @return {JSON} json
      */
-    getNewID() {
+    toJSON() {
+        let json = {};
 
-        let usersID = parseInt(localStorage.getItem('usersID'));
+        Object.keys(this).forEach(key => {
+            if (this[key] !== undefined) json[key] = this[key];
+        });
 
-        if (!usersID > 0) usersID = 0;
-
-        usersID++;
-
-        localStorage.setItem('usersID', usersID);
-
-        return usersID;
+        return json;
     }
 
     /* CRUD - User */
+    
     /**
-     * Salva um usuário no storage.
-     * - Verfica se já existe um usuário com o mesmo id.
-     * - Se existir, adiciona os novos dados ao usuário existente.
-     * - Caso contrário cria um novo usuário.
+     * Salva um novo usuário no banco ou atualiza um usuário já existente.
+     * - Utiliza a classe HttpRequest.
+     * 
+     * @return {Promise} Promise
      */
     save() {
-        let users = User.getUsersStorage();
+        return new Promise((resolve, reject) => {
+            let promise;
 
-        if (this.id > 0) {
-            users.map(user => {
-                if (user._id == this.id) {
-                    Object.assign(user, this);
-                }
-                return user;
+            if (this.id) {
+                // Neste caso, é um update no user
+                promise = HttpRequest.put(`/users/${this.id}`, this.toJSON());
+            } else {
+                // Neste caso, é um novo cadastro
+                promise = HttpRequest.post('/users', this.toJSON());
+            }
+
+            promise.then(data => {
+                this.loadFromJSON(data);
+                resolve(this);
+            }).catch(e => {
+                reject(e);
             });
-        } else {
-            this._id = this.getNewID();
-
-            users.push(this);
-        }
-
-        localStorage.setItem('users', JSON.stringify(users));
+        });
     }
 
     /**
      * Pega os usuários do storage.
      * 
-     * @return {Array} Usuários na storage.
+     * @return {Promise} Usuários na storage.
      */
     static getUsersStorage() {
-        let users = [];
-
-        // verifica se já existem usuários no storage
-        if (localStorage.getItem('users')) {
-            users = JSON.parse(localStorage.getItem('users'));
-        }
-
-        return users;
+        return HttpRequest.get('/users');
     }
 
     /**
      * Remove um usuário especificado do storage.
      */
     remove() {
-        let users = User.getUsersStorage();
-
-        users.forEach((userData, index) => {
-            if (this._id == userData._id) {
-                users.splice(index, 1);
-            }
-        });
-        
-        localStorage.setItem('users', JSON.stringify(users));        
+        return HttpRequest.delete(`/users/${this.id}`);       
     }
 }

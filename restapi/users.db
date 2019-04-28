@@ -2,3 +2,7 @@
 {"_name":"Pantheon","_email":"pantheon@mail.com","_password":"123456","_id":"QMy3v3BFLkoXKjYX"}
 {"_name":"Artur","_email":"artur@mail.com","_password":"123456","_id":"rKzCbNAomtYqQOFM"}
 {"_name":"Yorick Mori","_email":"yorick@mail.com","_password":"123456","_id":"zOIRDCQrXP787jgp"}
+{"_name":"Novo usuário","_gender":"M","_birth":"","_country":"","_email":"novo@mail.com","_password":"123","_photo":"dist/img/boxed-bg.jpg","_admin":false,"_register":"2019-04-28T11:37:46.152Z","_id":"KstiTiMAAy8WZTDj"}
+{"_name":"Novo","_gender":"M","_birth":"","_country":"","_email":"novo@mail.com","_password":"123","_photo":"dist/img/boxed-bg.jpg","_admin":false,"_register":"2019-04-28T11:41:29.415Z","_id":"KstiTiMAAy8WZTDj"}
+{"_name":"Novo de novo","_gender":"M","_birth":"","_country":"","_email":"novo@mail.com","_password":"123","_photo":"dist/img/boxed-bg.jpg","_admin":false,"_register":"2019-04-28T11:44:34.789Z","_id":"KstiTiMAAy8WZTDj"}
+{"$$deleted":true,"_id":"KstiTiMAAy8WZTDj"}

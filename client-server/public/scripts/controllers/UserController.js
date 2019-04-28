@@ -129,13 +129,15 @@ class UserController {
                 (content) => {
                     values.photo = content;
 
-                    values.save();
+                    values.save().then(user => {
+                        // atualiza na tela
+                        this.addLine(user);
 
-                    this.addLine(values);
+                        this.formEl.reset();
 
-                    this.formEl.reset();
+                        btn.disabled = false;
+                    });
 
-                    btn.disabled = false;
                 },
                 (e) => {
                     console.error(e);
@@ -191,17 +193,19 @@ class UserController {
 
                     user.loadFromJSON(result);
 
-                    user.save();
+                    user.save().then(user => {
+                        // atualiza na tela
+                        this.renderTr(user, tr);
 
-                    this.renderTr(user, tr);
+                        this.updateCount();
 
-                    this.updateCount();
+                        this.formUpdateEl.reset();
+                        
+                        btn.disabled = false;
+                        
+                        this.showPanelCreate();
+                    });
 
-                    this.formUpdateEl.reset();
-                    
-                    btn.disabled = false;
-                    
-                    this.showPanelCreate();
                 },
                 (e) => {
                     console.error(e);
@@ -272,11 +276,11 @@ class UserController {
                 
                 user.loadFromJSON(JSON.parse(tr.dataset.user));
                 
-                user.remove();
-
-                tr.remove();
-
-                this.updateCount();
+                user.remove().then(data => {
+                    // atualiza na tela
+                    tr.remove();
+                    this.updateCount();
+                });
             }
         });
     }
@@ -287,8 +291,8 @@ class UserController {
      * - Adiciona uma linha na tabela para cada um deles utilizando o método addLine().
      */
     selectAll () {
-        
-        HttpRequest.get('/users').then(data => {
+
+        User.getUsersStorage().then(data => {
             
             data.users.forEach(dataUser => {
                 let user = new User();
