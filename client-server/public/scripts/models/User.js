@@ -111,10 +111,21 @@ class User {
 
             if (this.id) {
                 // Neste caso, é um update no user
-                promise = HttpRequest.put(`/users/${this.id}`, this.toJSON());
+                // Este método utiliza a classe HttpRequest
+                // promise = HttpRequest.put(`/users/${this.id}`, this.toJSON());
+
+                // Para exemplo do exercício, o mesmo resultado deve ser obtido
+                // utilizando-se a classe Fetch
+                promise = Fetch.put(`/users/${this.id}`, this.toJSON());
+
             } else {
                 // Neste caso, é um novo cadastro
-                promise = HttpRequest.post('/users', this.toJSON());
+                // Este método utiliza a classe HttpRequest
+                // promise = HttpRequest.post('/users', this.toJSON());
+
+                // Para exemplo do exercício, o mesmo resultado deve ser obtido
+                // utilizando-se a classe Fetch
+                promise = Fetch.post('/users', this.toJSON());
             }
 
             promise.then(data => {
@@ -132,13 +143,23 @@ class User {
      * @return {Promise} Usuários na storage.
      */
     static getUsersStorage() {
-        return HttpRequest.get('/users');
+        // Este método utiliza a classe HttpRequest
+        // return HttpRequest.get('/users');
+
+        // Para exemplo do exercício, o mesmo resultado deve ser obtido
+        // utilizando-se a classe Fetch
+        return Fetch.get('/users');
     }
 
     /**
      * Remove um usuário especificado do storage.
      */
     remove() {
-        return HttpRequest.delete(`/users/${this.id}`);       
+        // Este método utiliza a classe HttpRequest
+        // return HttpRequest.delete(`/users/${this.id}`);
+        
+        // Para exemplo do exercício, o mesmo resultado deve ser obtido
+        // utilizando-se a classe Fetch
+        return Fetch.delete(`/users/${this.id}`);   
     }
 }
