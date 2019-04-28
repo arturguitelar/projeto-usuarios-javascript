@@ -282,18 +282,21 @@ class UserController {
     }
 
     /**
-     * Lista todos os dados armazenados na storage.
-     * Adiciona uma linha na tabela para cada um deles utilizando o método addLine().
+     * Lista todos os dados.
+     * - Utiliza a classe HttpRequest.
+     * - Adiciona uma linha na tabela para cada um deles utilizando o método addLine().
      */
     selectAll () {
-        let users = User.getUsersStorage();
-
-        users.forEach(dataUser => {
-            let user = new User();
-
-            user.loadFromJSON(dataUser);
-
-            this.addLine(user);
+        
+        HttpRequest.get('/users').then(data => {
+            
+            data.users.forEach(dataUser => {
+                let user = new User();
+    
+                user.loadFromJSON(dataUser);
+    
+                this.addLine(user);
+            });
         });
     }
     

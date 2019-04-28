@@ -1,4 +1,4 @@
-# Projeto Gerenciamento de Usuários (frontend)
+# Projeto Gerenciamento de Usuários (Client-Server)
 
 Projeto baseado no o [Curso Completo de JavaScript na Udemy.com]((https://www.udemy.com/javascript-curso-completo/)).
 
@@ -6,6 +6,7 @@ Projeto baseado no o [Curso Completo de JavaScript na Udemy.com]((https://www.ud
 
 **Algumas coisas interessantes aprendidas durante esta parte do projeto:**
 - Criação de projeto com a ferramenta Express Generator.
+- Restify.
 
 ### Instalação
 ```
