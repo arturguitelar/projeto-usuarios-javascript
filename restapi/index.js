@@ -7,9 +7,9 @@ let app = express();
 const port = 4000;
 
 // configurações do body-parser
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }));
 // converte para json os dados recebidos via post
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }));
 
 // utilizandoo express-validator
 app.use(expressValidator());
